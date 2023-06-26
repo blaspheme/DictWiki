@@ -1,0 +1,54 @@
+html,
+body {
+	height: 100%;
+	/* 设置html和body元素的高度为100% */
+	margin: 0;
+	/* 去除默认的边距 */
+	padding: 0;
+	/* 去除默认的内边距 */
+}
+
+#app {
+	height: 100%;
+}
+
+/* 首页布局 */
+.container {
+	display: flex;
+	height: 100%;
+}
+
+.container-sidebar {
+	flex: 1 1 auto;
+	background-color: aquamarine;
+}
+
+.container-content {
+	flex: 0 0 auto;
+	width: 50%;
+	background-color: bisque;
+}
+
+/* sidebar */
+
+.sidebar {
+	display: inline-flex;
+}
+
+.sidebar-title {
+	text-align: right;
+	margin-right: 1em;
+}
+
+.sidebar-save {
+	background-color: red;
+}
+
+.sidebar-saved {
+	background-color: aliceblue;
+}
+
+.sidebar-content {
+	width: 100%;
+	background-color: azure;
+}
