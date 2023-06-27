@@ -1,0 +1,4 @@
+export const PUBSUB_KEY = {
+    TITLE: "SETTING.TITLE",
+    LIST_CATEGORY: "LIST.CATEGORY",
+}

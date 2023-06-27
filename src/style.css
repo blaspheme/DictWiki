@@ -12,21 +12,31 @@ body {
 	height: 100%;
 }
 
+.hidden {
+	display: none;
+}
+
 /* 首页布局 */
 .container {
 	display: flex;
 	height: 100%;
 }
 
+.container-content {
+	flex: 0 0 auto;
+	width: 40%;
+	background-color: bisque;
+}
+
+.container-list-item {
+	flex: 0 0 auto;
+	width: 20%;
+	background-color: chocolate;
+}
+
 .container-sidebar {
 	flex: 1 1 auto;
 	background-color: aquamarine;
-}
-
-.container-content {
-	flex: 0 0 auto;
-	width: 50%;
-	background-color: bisque;
 }
 
 /* sidebar */
@@ -51,4 +61,12 @@ body {
 .sidebar-content {
 	width: 100%;
 	background-color: azure;
+}
+
+ul ul {
+	display: none;
+}
+
+ul .active {
+	display: block;
 }

@@ -8,4 +8,7 @@ export default defineConfig({
 		preact(),
 		viteSingleFile(), // https://www.npmjs.com/package/vite-plugin-singlefile
 	],
+	build: {
+		minify: true
+	}
 });

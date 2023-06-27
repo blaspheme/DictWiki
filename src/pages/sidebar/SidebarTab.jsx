@@ -1,7 +1,7 @@
 // @ts-nocheck
 import { useState } from "preact/hooks";
 import { SidebarCategory } from "./SidebarCategory"
-import { SidebarTag } from "./SidebarTag";
+import { SidebarItem } from "./SidebarItem";
 import { SidebarSetting } from "./SidebarSetting";
 
 export function SidebarTab(props) {
@@ -9,7 +9,6 @@ export function SidebarTab(props) {
 
 
     async function switchTab(event) {
-        console.log(event.target.id)
         setTab(event.target.id)
     }
 
@@ -18,8 +17,8 @@ export function SidebarTab(props) {
             <input type="radio" id="radio-category" onClick={switchTab} name="radiogroup" />
             <label for="radio-category">Category</label>
 
-            <input type="radio" id="radio-tag" onClick={switchTab} name="radiogroup" />
-            <label for="radio-tag">Tag</label>
+            <input type="radio" id="radio-item" onClick={switchTab} name="radiogroup" />
+            <label for="radio-item">Item</label>
 
             <input type="radio" id="radio-setting" onClick={switchTab} name="radiogroup" />
             <label for="radio-setting">Setting</label>
@@ -27,8 +26,8 @@ export function SidebarTab(props) {
 
         <div class="sidebar-content">
             {tab == "radio-category" && <SidebarCategory />}
-            {tab == "radio-tag" && <SidebarTag />}
-            {tab == "radio-setting" && <SidebarSetting setTitle={props.setTitle} />}
+            {tab == "radio-item" && <SidebarItem />}
+            {tab == "radio-setting" && <SidebarSetting />}
         </div>
     </>)
 }

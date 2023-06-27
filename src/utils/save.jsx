@@ -6,6 +6,15 @@ function getFileNameByURL() {
     return fileName;
 }
 
+/**
+ * 保存按钮的功能
+ * 下载HTML & WebDav保存
+ */
+function saveData() {
+    downloadHTML() // 下载页面
+    changeSaveState("sidebar-saved") // 保存成功
+}
+
 
 function downloadHTML() {
     let htmlContent = document.documentElement.outerHTML;
@@ -18,9 +27,8 @@ function downloadHTML() {
     document.body.removeChild(link);
 }
 
-
 function changeSaveState(className) {
     document.getElementById("save").setAttribute("class", className);
 }
 
-export { downloadHTML, changeSaveState };
+export { saveData };
