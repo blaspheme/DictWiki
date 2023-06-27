@@ -155,7 +155,7 @@ function SidebarCategoryEditRow(props) {
         props.setCategoriesList(newCategoriesList)
     }
 
-    return (<div style="display: inline-flex;">
+    return (<div class="div-inline">
         Title: <input title="title" value={props.item.title} onChangeCapture={changeValue} />
         Description: <input title="description" value={props.item.description} onChangeCapture={changeValue} />
         Parent: <input title="parent" value={props.item.parent} onChangeCapture={changeValue} />

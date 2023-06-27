@@ -10,7 +10,7 @@ export function Sidebar() {
     const [title, setTitle] = useState(""); // Wiki Title
 
     function add() {
-
+        PubSub.publish(PUBSUB_KEY.ITEM_ADD, "add");
     }
 
     useEffect(() => {
@@ -20,7 +20,7 @@ export function Sidebar() {
                 setTitle(data)
             }
         });
-        
+
         return () => {
             PubSub.unsubscribe(PUBSUB_KEY.TITLE); // 组件卸载时候取消订阅
         }

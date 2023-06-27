@@ -22,7 +22,7 @@ export function ListWord() {
     }, [])
 
     return (<div>
-        <h5>List(可以包含自定义查询)</h5>
+        <span>List(可以包含自定义查询)</span>
 
         {listType == "Category" && <ListCategory keyword={keyword} />}
     </div>)

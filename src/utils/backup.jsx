@@ -1,10 +1,18 @@
-import { compressCategories, decompressCategories } from './compress'
+import { compressCategories, decompressCategories, decompressItemType, compressItemType, decompressItemData, compressItemData } from './compress'
 
 async function exportData() {
     let resultCategoryList = decompressCategories()
+    let resultItemTypeList = decompressItemType()
+    let resultItemDataList = decompressItemData()
+
+
     let jsonData = {
         "resultCategoryList": resultCategoryList,
+        "resultItemTypeList": resultItemTypeList,
+        "resultItemDataList": resultItemDataList
     }
+
+    console.log(jsonData)
 
     let link = document.createElement("a");
     link.setAttribute('href', 'data:text/json;charset=utf-8,' + JSON.stringify(jsonData));
@@ -17,7 +25,15 @@ async function exportData() {
 
 function importData(importJson) {
     let importJsonObject = JSON.parse(importJson)
-    compressCategories(importJsonObject["resultCategoryList"]);
+    if (importJsonObject.hasOwnProperty("resultCategoryList")) {
+        compressCategories(importJsonObject["resultCategoryList"]);
+    }
+    if (importJsonObject.hasOwnProperty("resultItemTypeList")) {
+        compressItemType(importJsonObject["resultItemTypeList"]);
+    }
+    if (importJsonObject.hasOwnProperty("resultItemDataList")) {
+        compressItemData(importJsonObject["resultItemDataList"]);
+    }
 }
 
 export { exportData, importData };

@@ -14,6 +14,9 @@ export function SidebarTab(props) {
 
     return (<>
         <div class="main">
+        <input type="radio" id="radio-search" onClick={switchTab} name="radiogroup" />
+            <label for="radio-search">Search</label>
+
             <input type="radio" id="radio-category" onClick={switchTab} name="radiogroup" />
             <label for="radio-category">Category</label>
 
