@@ -30,7 +30,7 @@ export function ItemShow() {
         </div>
         <div>
             Categories: {typeof itemData != 'undefined' && itemData.hasOwnProperty("Categories")
-                && itemData.Categories.length > 0 && itemData.Categories.split(',').map(e => <ItemCategory category={e} />)}
+                && itemData.Categories.length > 0 && itemData.Categories.split(',').map(e => <ItemCategory category={e.trim()} />)}
         </div>
 
         {typeof itemTypeFieldList != 'undefined' && itemTypeFieldList.map(field => <ItemRow field={field} typeId={itemData.ItemTypeId} fieldData={itemData.Fields} />)}
@@ -65,6 +65,6 @@ function SwitchRenderList(props) {
     }
 
     return (<>
-        <span>{typeof props.data != "undefined" && props.data.length > 0 && props.data.split(',').map(e => <button onClick={clickWord}>{e}</button>)}</span>
+        <span>{typeof props.data != "undefined" && props.data.length > 0 && props.data.split(',').map(e => <button onClick={clickWord}>{e.trim()}</button>)}</span>
     </>)
 }
