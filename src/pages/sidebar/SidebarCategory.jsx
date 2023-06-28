@@ -2,8 +2,7 @@
 import { useEffect, useState } from "preact/hooks";
 import { compressCategories, decompressCategories } from "../../utils/compress";
 import { deepCopy } from "../../utils/object";
-import PubSub from 'pubsub-js';
-import { PUBSUB_KEY } from '../../constant/PUBSUB';
+import { setSelectedListProperty } from '../../utils/globalState';
 
 export function SidebarCategory() {
     const [isEdit, setIsEdit] = useState(false); // 编辑页面
@@ -102,7 +101,7 @@ function SidebarCategoryShowRowLi(props) {
     }
 
     function clickCategory(event) {
-        PubSub.publish(PUBSUB_KEY.LIST_CATEGORY, { type: "Category", text: event.target.innerText });
+        setSelectedListProperty(event.target.innerText, "Category")
     }
 
     return (

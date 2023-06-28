@@ -1,17 +1,18 @@
 // @ts-nocheck
 import { useEffect, useState } from "preact/hooks"
 import { decompressCategories, decompressItemData } from "../../utils/compress";
-import PubSub from 'pubsub-js';
-import { PUBSUB_KEY } from '../../constant/PUBSUB';
+import { listKey, setSelectedWord } from "../../utils/globalState";
 
 export function ListCategory(props) {
     const [category, setCategory] = useState() // category的属性
     const [itemKeyList, setItemKeyList] = useState([])
 
     useEffect(() => {
+        console.log("cccccccccccccccc")
+        console.log(listKey.value)
         let _categoriesList = decompressCategories()
         for (const _ of _categoriesList) {
-            if (_.title == props.keyword) {
+            if (_.title == listKey.value) {
                 setCategory(_)
                 break
             }
@@ -21,15 +22,15 @@ export function ListCategory(props) {
         let tmp = []
         for (const [key, _] of Object.entries(_itemData)) {
             let _categoriesList = _.Categories.split(',')
-            if (_categoriesList.includes(props.keyword)) {
+            if (_categoriesList.includes(listKey.value)) {
                 tmp.push(key)
             }
         }
         setItemKeyList(tmp)
-    }, [props.keyword])
+    }, [listKey.value])
 
     function queryItem(event) {
-        PubSub.publish(PUBSUB_KEY.ITEM_QUERY, event.target.innerText);
+        setSelectedWord(event.target.innerText)
     }
 
     return (<div>

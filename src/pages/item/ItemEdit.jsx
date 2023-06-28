@@ -2,8 +2,9 @@
 import { useEffect, useState } from 'preact/hooks';
 import { decompressItemType, decompressItemData, compressItemData } from '../../utils/compress';
 import { deepCopy } from "../../utils/object";
+import { itemEditFlag, selectedWord } from '../../utils/globalState';
 
-export function ItemEdit(props) {
+export function ItemEdit() {
     const [isAdd, setIsAdd] = useState(false)
     const [itemTypeId, setItemTypeId] = useState(""); // 选择的类型ID
     const [itemTypeList, setItemTypeList] = useState([]) // Item Type的所有数据
@@ -13,9 +14,7 @@ export function ItemEdit(props) {
     const [itemCategories, setItemCategories] = useState(""); // Item 的 Categories
     const [itemFieldObject, setItemFieldObject] = useState({})
 
-
     function setFieldListByTypeId(typdId) {
-        console.log(".......", typdId)
         for (const _ of itemTypeList) {
             if (typdId == _.itemTypeId) {
                 setFieldList(_.fieldList)
@@ -42,7 +41,7 @@ export function ItemEdit(props) {
         itemDataList[itemTitle]["Fields"] = itemFieldObject
         console.log(itemDataList)
         compressItemData(itemDataList)
-        props.setIsEdit(false)
+        itemEditFlag.value = false
     }
 
     useEffect(() => {
@@ -51,17 +50,17 @@ export function ItemEdit(props) {
         setItemTypeList(_itemTypeList);
         let _itemDataList = decompressItemData()
         setItemDataList(_itemDataList)
-        setItemTitle(props.itemTitle)
-        if (props.itemTitle.length > 0 && _itemDataList.hasOwnProperty(props.itemTitle)) { // 需要读取数据, update
-            setItemCategories(_itemDataList[props.itemTitle]["Categories"])
-            setItemTypeId(_itemDataList[props.itemTitle]["ItemTypeId"])
+        setItemTitle(selectedWord.value)
+        if (selectedWord.value.length > 0 && _itemDataList.hasOwnProperty(selectedWord.value)) { // 需要读取数据, update
+            setItemCategories(_itemDataList[selectedWord.value]["Categories"])
+            setItemTypeId(_itemDataList[selectedWord.value]["ItemTypeId"])
             for (const _ of _itemTypeList) {
-                if (_itemDataList[props.itemTitle]["ItemTypeId"] == _.itemTypeId) {
+                if (_itemDataList[selectedWord.value]["ItemTypeId"] == _.itemTypeId) {
                     setFieldList(_.fieldList)
                     break
                 }
             }
-            setItemFieldObject(_itemDataList[props.itemTitle]["Fields"])
+            setItemFieldObject(_itemDataList[selectedWord.value]["Fields"])
             setIsAdd(false)
         } else {
             setIsAdd(true)

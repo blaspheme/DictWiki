@@ -4,7 +4,7 @@ import { SidebarCategory } from "./SidebarCategory"
 import { SidebarItem } from "./SidebarItem";
 import { SidebarSetting } from "./SidebarSetting";
 
-export function SidebarTab(props) {
+export function SidebarTab() {
     const [tab, setTab] = useState("radio-category");
 
 

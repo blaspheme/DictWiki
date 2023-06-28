@@ -1,10 +1,9 @@
 // @ts-nocheck
 import { useEffect, useState } from "preact/hooks"
 import { decompressItemType, decompressItemData } from '../../utils/compress';
-import PubSub from 'pubsub-js';
-import { PUBSUB_KEY } from '../../constant/PUBSUB';
+import { itemEditFlag, selectedWord, setSelectedWord, setSelectedListProperty } from '../../utils/globalState';
 
-export function ItemShow(props) {
+export function ItemShow() {
     const [itemData, setItemData] = useState()
     const [itemTypeFieldList, setItemTypeFieldList] = useState([]) // Item Type Field 的所有数据
 
@@ -12,11 +11,11 @@ export function ItemShow(props) {
         let _itemTypeList = decompressItemType()
         let _itemDataList = decompressItemData()
 
-        if (_itemDataList.hasOwnProperty(props.itemTitle)) {
-            setItemData(_itemDataList[props.itemTitle])
+        if (_itemDataList.hasOwnProperty(selectedWord.value)) {
+            setItemData(_itemDataList[selectedWord.value])
 
             for (const _ of _itemTypeList) {
-                if (_.itemTypeId == _itemDataList[props.itemTitle].ItemTypeId) {
+                if (_.itemTypeId == _itemDataList[selectedWord.value].ItemTypeId) {
                     setItemTypeFieldList(_.fieldList);
                     break
                 }
@@ -24,16 +23,16 @@ export function ItemShow(props) {
         }
 
 
-    }, [props.itemTitle])
+    }, [selectedWord.value])
 
     return (<>
         <div>
-            <h3>{props.itemTitle}</h3>
-            <button class="right" onClick={() => props.setIsEdit(true)}>编辑</button>
+            <h3>{selectedWord}</h3>
+            <button class="right" onClick={() => itemEditFlag.value = true}>编辑</button>
         </div>
         <div>
             Categories: {typeof itemData != 'undefined' && itemData.hasOwnProperty("Categories")
-            && itemData.Categories.length > 0 && itemData.Categories.split(',').map(e => <ItemCategory category={e} />)}
+                && itemData.Categories.length > 0 && itemData.Categories.split(',').map(e => <ItemCategory category={e} />)}
         </div>
 
         {typeof itemTypeFieldList != 'undefined' && itemTypeFieldList.map(field => <ItemRow field={field} typeId={itemData.ItemTypeId} fieldData={itemData.Fields} />)}
@@ -42,7 +41,7 @@ export function ItemShow(props) {
 
 function ItemCategory(props) {
     function clickCategory(event) {
-        PubSub.publish(PUBSUB_KEY.LIST_CATEGORY, { type: "Category", text: event.target.innerText });
+        setSelectedListProperty(event.target.innerText, "Category")
     }
 
     return (<button onClick={clickCategory}>{props.category}</button>)
@@ -64,7 +63,7 @@ function SwitchRender(props) {
 
 function SwitchRenderList(props) {
     function clickWord(event) {
-        PubSub.publish(PUBSUB_KEY.ITEM_QUERY, event.target.innerText);
+        setSelectedWord(event.target.innerText)
     }
 
     return (<>
