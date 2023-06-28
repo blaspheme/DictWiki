@@ -1,4 +1,4 @@
-function decompressCategories() {
+export function decompressCategories() {
     let resultList = []
     let compressedString = document.getElementById("DictWiki-Category").innerText;
     if (compressedString != '') {
@@ -7,7 +7,7 @@ function decompressCategories() {
     return resultList
 }
 
-function compressCategories(resultList) {
+export function compressCategories(resultList) {
     let compressedString = "";
     if (resultList.length > 0) {
         compressedString = JSON.stringify(resultList)
@@ -16,7 +16,7 @@ function compressCategories(resultList) {
 }
 
 
-function decompressItemType() {
+export function decompressItemType() {
     let resultList = []
     let compressedString = document.getElementById("DictWiki-ItemType").innerText;
     if (compressedString != '') {
@@ -25,7 +25,7 @@ function decompressItemType() {
     return resultList
 }
 
-function compressItemType(resultList) {
+export function compressItemType(resultList) {
     let compressedString = "";
     if (resultList.length > 0) {
         compressedString = JSON.stringify(resultList)
@@ -33,7 +33,7 @@ function compressItemType(resultList) {
     document.getElementById("DictWiki-ItemType").innerText = compressedString
 }
 
-function decompressItemData() {
+export function decompressItemData() {
     let resultObject = {}
     let compressedString = document.getElementById("DictWiki-Data").innerText;
     if (compressedString != '') {
@@ -42,9 +42,6 @@ function decompressItemData() {
     return resultObject
 }
 
-function compressItemData(resultObject) {
+export function compressItemData(resultObject) {
     document.getElementById("DictWiki-Data").innerText = JSON.stringify(resultObject)
 }
-
-
-export { compressCategories, decompressCategories, decompressItemType, compressItemType, decompressItemData, compressItemData };

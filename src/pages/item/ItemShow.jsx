@@ -1,20 +1,18 @@
 // @ts-nocheck
 import { useEffect, useState } from "preact/hooks"
-import { decompressItemType, decompressItemData } from '../../utils/compress';
-import { itemEditFlag, selectedWord, setSelectedWord, setSelectedListProperty } from '../../utils/globalState';
+import { itemEditFlag, selectedWord, setSelectedWord, setSelectedListProperty, getItemTypeList, getItemList } from '../../utils/globalState';
 
 export function ItemShow() {
     const [itemData, setItemData] = useState()
     const [itemTypeFieldList, setItemTypeFieldList] = useState([]) // Item Type Field 的所有数据
 
     useEffect(() => {
-        let _itemTypeList = decompressItemType()
-        let _itemDataList = decompressItemData()
+        let _itemDataList = getItemList().value
 
         if (_itemDataList.hasOwnProperty(selectedWord.value)) {
             setItemData(_itemDataList[selectedWord.value])
 
-            for (const _ of _itemTypeList) {
+            for (const _ of getItemTypeList().value) {
                 if (_.itemTypeId == _itemDataList[selectedWord.value].ItemTypeId) {
                     setItemTypeFieldList(_.fieldList);
                     break
@@ -27,7 +25,7 @@ export function ItemShow() {
 
     return (<>
         <div>
-            <h3>{selectedWord}</h3>
+            <h3>{selectedWord.value}</h3>
             <button class="right" onClick={() => itemEditFlag.value = true}>编辑</button>
         </div>
         <div>

@@ -1,26 +1,21 @@
 // @ts-nocheck
 import { useEffect, useState } from "preact/hooks"
-import { decompressCategories, decompressItemData } from "../../utils/compress";
-import { listKey, setSelectedWord } from "../../utils/globalState";
+import { listKey, setSelectedWord, getCategoriesObject, getItemList } from "../../utils/globalState";
 
-export function ListCategory(props) {
+export function ListCategory() {
     const [category, setCategory] = useState() // category的属性
     const [itemKeyList, setItemKeyList] = useState([])
 
     useEffect(() => {
-        console.log("cccccccccccccccc")
-        console.log(listKey.value)
-        let _categoriesList = decompressCategories()
-        for (const _ of _categoriesList) {
+        for (const _ of getCategoriesObject().value) {
             if (_.title == listKey.value) {
                 setCategory(_)
                 break
             }
         }
         // 查询值
-        let _itemData = decompressItemData()
         let tmp = []
-        for (const [key, _] of Object.entries(_itemData)) {
+        for (const [key, _] of Object.entries(getItemList().value)) {
             let _categoriesList = _.Categories.split(',')
             if (_categoriesList.includes(listKey.value)) {
                 tmp.push(key)

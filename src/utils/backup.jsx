@@ -11,9 +11,7 @@ async function exportData() {
         "resultItemTypeList": resultItemTypeList,
         "resultItemDataList": resultItemDataList
     }
-
-    console.log(jsonData)
-
+    
     let link = document.createElement("a");
     link.setAttribute('href', 'data:text/json;charset=utf-8,' + JSON.stringify(jsonData));
     let fileName = "export.json"

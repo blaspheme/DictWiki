@@ -1,4 +1,5 @@
 import { signal } from "@preact/signals";
+import { decompressCategories, decompressItemData, decompressItemType } from "./compress";
 
 // Wiki Title: Wiki 标题
 export const wikiTitle = signal(document.getElementsByTagName('title')[0].innerText);
@@ -15,13 +16,22 @@ export const listType = signal("");
 export const selectedWord = signal("")
 export const itemEditFlag = signal(false) // Item 页面是否编辑
 
+// Item Type 相关全局变量
+export const itemTypeList = signal(null)
+export const itemTypeListMaxId = signal(-1)
+
+// Category 相关全局变量
+export const categoriesObject = signal(null)
+
+// Item 相关全局变量
+export const itemList = signal(null)
+
 export const setWikiTitle = (title) => {
     document.getElementsByTagName('title')[0].innerText = title;
     wikiTitle.value = document.getElementsByTagName('title')[0].innerText
 }
 
 export const setSelectedListProperty = (listKeyValue, listTypeValue) => {
-    console.log(listKeyValue, listTypeValue)
     listKey.value = listKeyValue
     listType.value = listTypeValue
 }
@@ -31,7 +41,47 @@ export const setSelectedWord = (newSelectedWord) => {
     itemEditFlag.value = false
 }
 
-export const addNewWord = ()=>{
+export const addNewWord = () => {
     selectedWord.value = "";
     itemEditFlag.value = true
+}
+
+export const getItemTypeList = () => {
+    if (itemTypeList.value == null) {
+        itemTypeList.value = decompressItemType()
+    }
+    return itemTypeList
+}
+
+export const getItemTypeListMaxId = () => {
+    if (itemTypeList.value.length > 0) {
+        // @ts-ignore
+        let itemTypeIdList = itemTypeList.value.map(e => e.itemTypeId)
+        itemTypeListMaxId.value = Math.max.apply(null, itemTypeIdList)
+    }
+    return itemTypeListMaxId
+}
+
+export const reloadItemTypeListFromHTML = () => {
+    itemTypeList.value = null
+    getItemTypeList()
+}
+
+export const getCategoriesObject = () => {
+    if (categoriesObject.value == null || categoriesObject.value.length < 1) {
+        categoriesObject.value = decompressCategories()
+    }
+    return categoriesObject
+}
+
+export const reloadCategoriesObject = () => {
+    categoriesObject.value = null
+    getCategoriesObject()
+}
+
+export const getItemList = () => {
+    if (itemList.value == null || Object.keys(itemList.value).length == 0) {
+        itemList.value = decompressItemData()
+    }
+    return itemList
 }

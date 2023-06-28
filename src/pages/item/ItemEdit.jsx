@@ -1,21 +1,19 @@
 // @ts-nocheck
 import { useEffect, useState } from 'preact/hooks';
-import { decompressItemType, decompressItemData, compressItemData } from '../../utils/compress';
+import { compressItemData } from '../../utils/compress';
 import { deepCopy } from "../../utils/object";
-import { itemEditFlag, selectedWord } from '../../utils/globalState';
+import { selectedWord, getItemTypeList, getItemList, setSelectedWord } from '../../utils/globalState';
 
 export function ItemEdit() {
     const [isAdd, setIsAdd] = useState(false)
     const [itemTypeId, setItemTypeId] = useState(""); // 选择的类型ID
-    const [itemTypeList, setItemTypeList] = useState([]) // Item Type的所有数据
-    const [itemDataList, setItemDataList] = useState({}) // Item Data 的所有数据
     const [fieldList, setFieldList] = useState([])
     const [itemTitle, setItemTitle] = useState(""); // Item 的标题，唯一
     const [itemCategories, setItemCategories] = useState(""); // Item 的 Categories
     const [itemFieldObject, setItemFieldObject] = useState({})
 
     function setFieldListByTypeId(typdId) {
-        for (const _ of itemTypeList) {
+        for (const _ of getItemTypeList().value) {
             if (typdId == _.itemTypeId) {
                 setFieldList(_.fieldList)
                 break
@@ -30,31 +28,28 @@ export function ItemEdit() {
 
     function save() {
         if (isAdd) {
-            if (Object.keys(itemDataList).includes(itemTitle)) {
+            if (Object.keys(getItemList().value).includes(itemTitle)) {
                 alert("已经存在...")
                 return
             }
-            itemDataList[itemTitle] = {}
+            selectedWord.value = itemTitle
+            getItemList().value[itemTitle] = {}
         }
-        itemDataList[itemTitle]["Categories"] = itemCategories
-        itemDataList[itemTitle]["ItemTypeId"] = itemTypeId
-        itemDataList[itemTitle]["Fields"] = itemFieldObject
-        console.log(itemDataList)
-        compressItemData(itemDataList)
-        itemEditFlag.value = false
+        getItemList().value[itemTitle]["Categories"] = itemCategories
+        getItemList().value[itemTitle]["ItemTypeId"] = itemTypeId
+        getItemList().value[itemTitle]["Fields"] = itemFieldObject
+        compressItemData(getItemList().value)
+        setSelectedWord(itemTitle)
     }
 
     useEffect(() => {
         // Type List 加载
-        let _itemTypeList = decompressItemType()
-        setItemTypeList(_itemTypeList);
-        let _itemDataList = decompressItemData()
-        setItemDataList(_itemDataList)
+        let _itemDataList = getItemList().value
         setItemTitle(selectedWord.value)
         if (selectedWord.value.length > 0 && _itemDataList.hasOwnProperty(selectedWord.value)) { // 需要读取数据, update
             setItemCategories(_itemDataList[selectedWord.value]["Categories"])
             setItemTypeId(_itemDataList[selectedWord.value]["ItemTypeId"])
-            for (const _ of _itemTypeList) {
+            for (const _ of getItemTypeList().value) {
                 if (_itemDataList[selectedWord.value]["ItemTypeId"] == _.itemTypeId) {
                     setFieldList(_.fieldList)
                     break
@@ -70,7 +65,7 @@ export function ItemEdit() {
     return (
         <div>
             <div>类型: <select title="fieldType" value={itemTypeId} onChangeCapture={changeType}>
-                {itemTypeList.length > 0 && itemTypeList.map(item => <option value={item.itemTypeId}>{item.itemTypeName}</option>)}
+                {getItemTypeList().value.length > 0 && getItemTypeList().value.map(item => <option value={item.itemTypeId}>{item.itemTypeName}</option>)}
             </select></div>
 
             <div>Title(必填): <input title="itemTitle" value={itemTitle} onChangeCapture={(e) => setItemTitle(e.target.value)}></input></div>
