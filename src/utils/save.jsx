@@ -3,7 +3,7 @@ import { changeState } from "./globalState";
 function getFileNameByURL() {
     let fileName = window.location.pathname.split("/").pop();
     if (fileName == '') {
-        fileName = `index.html`
+        fileName = `DictWiki.html`
     }
     return fileName;
 }

@@ -9,6 +9,11 @@ export default defineConfig({
 		viteSingleFile(), // https://www.npmjs.com/package/vite-plugin-singlefile
 	],
 	build: {
-		minify: true
+		minify: true,
+		rollupOptions: {
+			input: {
+				app: './DictWiki.html',
+			},
+		}
 	}
 });
