@@ -1,6 +1,9 @@
 import { signal } from "@preact/signals";
 import { decompressCategories, decompressItemData, decompressItemType } from "./compress";
 
+// Wiki 是否修改的标记
+export const changeState = signal(false)
+
 // Wiki Title: Wiki 标题
 export const wikiTitle = signal(document.getElementsByTagName('title')[0].innerText);
 

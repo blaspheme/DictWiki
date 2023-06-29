@@ -1,7 +1,7 @@
 import { useEffect, useState } from "preact/hooks";
 import { compressItemType } from "../../utils/compress";
 import { deepCopy } from "../../utils/object";
-import { getItemTypeListMaxId, getItemTypeList, reloadItemTypeListFromHTML } from "../../utils/globalState";
+import { getItemTypeListMaxId, getItemTypeList, reloadItemTypeListFromHTML, changeState } from "../../utils/globalState";
 
 export function SidebarItem() {
     const [isEdit, setIsEdit] = useState(false); // 编辑页面
@@ -72,6 +72,7 @@ function SidebarItemEdit(props) {
         reloadItemTypeListFromHTML()
         // 显示
         props.setIsEdit(false)
+        changeState.value = true
     }
 
     function addNewColumn() {

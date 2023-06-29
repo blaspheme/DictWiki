@@ -1,3 +1,5 @@
+import { changeState } from "./globalState";
+
 function getFileNameByURL() {
     let fileName = window.location.pathname.split("/").pop();
     if (fileName == '') {
@@ -12,7 +14,7 @@ function getFileNameByURL() {
  */
 function saveData() {
     downloadHTML() // 下载页面
-    changeSaveState("sidebar-saved") // 保存成功
+    changeState.value = false
 }
 
 
@@ -25,10 +27,6 @@ function downloadHTML() {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-}
-
-function changeSaveState(className) {
-    document.getElementById("save").setAttribute("class", className);
 }
 
 export { saveData };

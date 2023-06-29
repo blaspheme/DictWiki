@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'preact/hooks';
 import { compressItemData } from '../../utils/compress';
 import { deepCopy } from "../../utils/object";
-import { selectedWord, getItemTypeList, getItemList, setSelectedWord } from '../../utils/globalState';
+import { changeState, selectedWord, getItemTypeList, getItemList, setSelectedWord } from '../../utils/globalState';
 
 export function ItemEdit() {
     const [isAdd, setIsAdd] = useState(false)
@@ -40,6 +40,7 @@ export function ItemEdit() {
         getItemList().value[itemTitle]["Fields"] = itemFieldObject
         compressItemData(getItemList().value)
         setSelectedWord(itemTitle)
+        changeState.value = true
     }
 
     useEffect(() => {

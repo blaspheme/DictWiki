@@ -2,7 +2,7 @@
 import { useEffect, useState } from "preact/hooks";
 import { compressCategories } from "../../utils/compress";
 import { deepCopy } from "../../utils/object";
-import { setSelectedListProperty, getCategoriesObject,reloadCategoriesObject } from '../../utils/globalState';
+import { changeState, setSelectedListProperty, getCategoriesObject, reloadCategoriesObject } from '../../utils/globalState';
 
 export function SidebarCategory() {
     const [isEdit, setIsEdit] = useState(false); // 编辑页面
@@ -72,7 +72,7 @@ function SidebarCategoryShow(props) {
     }
 
     useEffect(() => {
-        let _tree = convertCategoriesTree(getCategoriesObject().value )
+        let _tree = convertCategoriesTree(getCategoriesObject().value)
         setCategoriesTree(_tree)
     }, [])
 
@@ -129,6 +129,7 @@ function SidebarCategoryEdit(props) {
         compressCategories(categoriesList)
         reloadCategoriesObject()
         props.setIsEdit(false)
+        changeState.value = true
     }
 
     function addNewRow() {
