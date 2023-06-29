@@ -29,7 +29,8 @@ export function ItemShow() {
             <button class="right" onClick={() => itemEditFlag.value = true}>编辑</button>
         </div>
         <div>
-            Categories: {typeof itemData != 'undefined' && itemData.hasOwnProperty("Categories")
+            {selectedWord.value.length > 0 && <>Categories:</>}
+            {typeof itemData != 'undefined' && itemData.hasOwnProperty("Categories")
                 && itemData.Categories.length > 0 && itemData.Categories.split(',').map(e => <ItemCategory category={e.trim()} />)}
         </div>
 
