@@ -25,6 +25,7 @@ export function SidebarSetting() {
             const contents = event.target.result;
             importData(contents);
             alert("Import Successfully!");
+            changeState.value = true
         };
 
         reader.readAsText(file);
