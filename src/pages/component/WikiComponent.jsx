@@ -6,6 +6,7 @@ export function WikiComponent(props) {
 
     useEffect(() => {
         if (typeof props.content == 'undefined') { // 没有数据
+            setResult([])
             return
         }
 
