@@ -1,7 +1,8 @@
 // @ts-nocheck
 import { useEffect, useState } from "preact/hooks"
 import { itemEditFlag, selectedWord, setSelectedListProperty, getItemTypeList, getItemList } from '../../utils/globalState';
-import { clickWord } from '../../utils/clickEvent'
+import { WordButton } from '../component/WordButton'
+import { WikiComponent } from '../component/WikiComponent'
 
 export function ItemShow() {
     const [itemData, setItemData] = useState()
@@ -53,7 +54,7 @@ function ItemRow(props) {
 
 function SwitchRender(props) {
     return (<>
-        {props.field.fieldType == 'string' && <span>{props.fieldData[props.fieldId]}</span>}
+        {props.field.fieldType == 'string' && <WikiComponent content={props.fieldData[props.fieldId]} />}
         {props.field.fieldType == 'list' && <SwitchRenderList data={props.fieldData[props.fieldId]} />}
 
     </>)
@@ -61,6 +62,6 @@ function SwitchRender(props) {
 
 function SwitchRenderList(props) {
     return (<>
-        <span>{typeof props.data != "undefined" && props.data.length > 0 && props.data.split(',').map(e => <button onClick={clickWord}>{e.trim()}</button>)}</span>
+        <span>{typeof props.data != "undefined" && props.data.length > 0 && props.data.split(',').map(e => <WordButton word={e.trim()} />)}</span>
     </>)
 }
