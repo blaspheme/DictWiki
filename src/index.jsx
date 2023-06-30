@@ -18,9 +18,9 @@ export function App() {
 	return (
 		<>
 			<div class="container">
-				<div class="container-content"><Item /></div>
-				<div class="container-list-item"><ListWord /></div>
-				<div class="container-sidebar"><Sidebar /></div>
+				<div class="container-column container-content"><Item /></div>
+				<div class="container-column container-list-item"><ListWord /></div>
+				<div class="container-column container-sidebar"><Sidebar /></div>
 			</div>
 		</>
 	);

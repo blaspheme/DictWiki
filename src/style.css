@@ -31,6 +31,10 @@ body {
 	height: 100%;
 }
 
+.container-column {
+	overflow: auto;
+}
+
 .container-content {
 	flex: 0 0 auto;
 	width: 40%;
