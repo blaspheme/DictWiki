@@ -18,6 +18,7 @@ export const listType = signal("");
 // 选择的词
 export const selectedWord = signal("") // 选择的 Word
 export const itemEditFlag = signal(false) // Item 页面是否编辑
+export const selectedWordHistory = signal(null) // 选择的 Word 的历史 Stack
 
 // Item Type 相关全局变量
 export const itemTypeList = signal(null)
@@ -39,9 +40,32 @@ export const setSelectedListProperty = (listKeyValue, listTypeValue) => {
     listType.value = listTypeValue
 }
 
-export const setSelectedWord = (newSelectedWord) => {
+function _setSelectedWord(newSelectedWord) {
     selectedWord.value = newSelectedWord;
     itemEditFlag.value = false
+}
+
+export const setSelectedWord = (newSelectedWord) => {
+    if (!itemList.value.hasOwnProperty(newSelectedWord)) {
+        alert("单词没有创建...")
+        return
+    }
+
+    if (selectedWord.value.length > 0) {
+        if (selectedWordHistory.value == null) {
+            selectedWordHistory.value = []
+        }
+        selectedWordHistory.value.push(selectedWord.value)
+    }
+    _setSelectedWord(newSelectedWord)
+}
+
+export const getPreviousWord = () => {
+    if (selectedWordHistory.value != null && selectedWordHistory.value.length == 0) {
+        return
+    }
+    let _ = selectedWordHistory.value.pop()
+    _setSelectedWord(_)
 }
 
 export const addNewWord = () => {
