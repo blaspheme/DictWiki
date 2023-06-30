@@ -48,7 +48,7 @@ function ItemCategory(props) {
 
 function ItemRow(props) {
     return (<div>
-        {props.field.fieldName}: <SwitchRender field={props.field} fieldData={props.fieldData} fieldId={props.typeId + "-" + props.field.fieldId} />
+        <label>{props.field.fieldName}:</label><SwitchRender field={props.field} fieldData={props.fieldData} fieldId={props.typeId + "-" + props.field.fieldId} />
     </div>)
 }
 

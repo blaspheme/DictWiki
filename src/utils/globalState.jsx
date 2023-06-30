@@ -12,11 +12,11 @@ export const wikiTitle = signal(document.getElementsByTagName('title')[0].innerT
  * listKey: key 名称
  * listType: 渲染类型; 取值 : Category
 */
-export const listKey = signal("");
+export const listKey = signal(""); // 包含: 选择的Category
 export const listType = signal("");
 
 // 选择的词
-export const selectedWord = signal("")
+export const selectedWord = signal("") // 选择的 Word
 export const itemEditFlag = signal(false) // Item 页面是否编辑
 
 // Item Type 相关全局变量

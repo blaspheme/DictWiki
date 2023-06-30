@@ -11,7 +11,6 @@ export function SidebarSetting() {
         let icon = document.getElementById('setting-input-icon').value;
         document.getElementsByTagName('link')[0].setAttribute("href", icon)
         changeState.value = true
-        console.log(changeState)
     }
 
     function clickImport() {

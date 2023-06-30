@@ -16,7 +16,7 @@ body {
 	display: none;
 }
 
-.div-inline{
+.div-inline {
 	display: inline-flex;
 }
 
@@ -78,4 +78,13 @@ ul ul {
 
 ul .active {
 	display: block;
+}
+
+/* item 部分 */
+.item-textarea {
+	width: 98%;
+}
+
+label {
+	color: orange;
 }

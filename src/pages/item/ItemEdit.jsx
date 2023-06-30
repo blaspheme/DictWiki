@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'preact/hooks';
 import { compressItemData } from '../../utils/compress';
 import { deepCopy } from "../../utils/object";
-import { changeState, selectedWord, getItemTypeList, getItemList, setSelectedWord } from '../../utils/globalState';
+import { listKey, listType, changeState, selectedWord, getItemTypeList, getItemList, setSelectedWord } from '../../utils/globalState';
 
 export function ItemEdit() {
     const [isAdd, setIsAdd] = useState(false)
@@ -58,7 +58,10 @@ export function ItemEdit() {
             }
             setItemFieldObject(_itemDataList[selectedWord.value]["Fields"])
             setIsAdd(false)
-        } else {
+        } else { // 新增
+            if (listType.value == 'Category') { // Category 赋值默认值
+                setItemCategories(listKey.value)
+            }
             setIsAdd(true)
         }
     }, [])
@@ -97,5 +100,5 @@ function FieldRow(props) {
         setValue(props.itemFieldObject[props.itemTypeId + "-" + props.field.fieldId])
     }, [value])
 
-    return (<div>{props.field.fieldName}: <input title={props.itemTypeId + "-" + props.field.fieldId} value={value} onChangeCapture={changeValue}></input></div>)
+    return (<div>{props.field.fieldName}: <textarea title={props.itemTypeId + "-" + props.field.fieldId} class="item-textarea" value={value} onChangeCapture={changeValue}></textarea></div>)
 }
