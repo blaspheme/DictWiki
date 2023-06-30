@@ -1,6 +1,7 @@
 // @ts-nocheck
 import { useEffect, useState } from "preact/hooks"
-import { itemEditFlag, selectedWord, setSelectedWord, setSelectedListProperty, getItemTypeList, getItemList } from '../../utils/globalState';
+import { itemEditFlag, selectedWord, setSelectedListProperty, getItemTypeList, getItemList } from '../../utils/globalState';
+import { clickWord } from '../../utils/clickEvent'
 
 export function ItemShow() {
     const [itemData, setItemData] = useState()
@@ -19,8 +20,6 @@ export function ItemShow() {
                 }
             }
         }
-
-
     }, [selectedWord.value])
 
     return (<>
@@ -61,10 +60,6 @@ function SwitchRender(props) {
 }
 
 function SwitchRenderList(props) {
-    function clickWord(event) {
-        setSelectedWord(event.target.innerText)
-    }
-
     return (<>
         <span>{typeof props.data != "undefined" && props.data.length > 0 && props.data.split(',').map(e => <button onClick={clickWord}>{e.trim()}</button>)}</span>
     </>)
