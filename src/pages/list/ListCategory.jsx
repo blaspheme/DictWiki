@@ -30,7 +30,7 @@ export function ListCategory() {
 
     return (<div>
         {typeof category != 'undefined' && <div>
-            <h5>{category.title}</h5>
+            <h5>{category.title}({itemKeyList.length})</h5>
             <span>{category.description}</span>
         </div>}
 
