@@ -1,7 +1,7 @@
 // @ts-nocheck
 import { useEffect, useState } from "preact/hooks"
-import { listKey, getCategoriesObject, getItemList } from "../../utils/globalState";
-import { WordButton } from '../component/WordButton'
+import { listKey, getCategoriesObject, getItemList, listType } from "../../utils/globalState";
+import {ListWordByKey} from './ListWordByKey'
 
 export function ListCategory() {
     const [category, setCategory] = useState() // category的属性
@@ -29,14 +29,11 @@ export function ListCategory() {
 
     return (<div>
         {typeof category != 'undefined' && <div>
-            <h5>{category.title}({itemKeyList.length})</h5>
-            <span>{category.description}</span>
+            <span>{typeof listType.value != 'undefined' && listType.value} : </span>
+            <span>{category.title}({itemKeyList.length})</span>
+            <div>{category.description}</div>
         </div>}
 
-        <ul>
-            {typeof itemKeyList != 'undefined' && itemKeyList.length > 0 &&
-                itemKeyList.map(e => <li><WordButton word={e} />  </li>)
-            }
-        </ul>
+        <ListWordByKey itemKeyList={itemKeyList} />
     </div>)
 }

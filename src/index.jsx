@@ -1,8 +1,7 @@
 import { render } from 'preact';
 import { Sidebar } from './pages/sidebar/Sidebar.jsx';
-import { ListWord } from './pages/list/ListWord.jsx';
-import { Item } from './pages/item/Item.jsx';
 import { changeState } from './utils/globalState.jsx'
+import { Main } from './Main.jsx';
 import './style.css';
 
 window.addEventListener('beforeunload', function (e) {
@@ -18,8 +17,7 @@ export function App() {
 	return (
 		<>
 			<div class="container">
-				<div class="container-column container-content"><Item /></div>
-				<div class="container-column container-list-item"><ListWord /></div>
+				<div class="container-column container-content"><Main /></div>
 				<div class="container-column container-sidebar"><Sidebar /></div>
 			</div>
 		</>

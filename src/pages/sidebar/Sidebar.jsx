@@ -1,9 +1,17 @@
 // @ts-nocheck
 import { SidebarTab } from './SidebarTab';
 import { saveData } from '../../utils/save';
-import { changeState, wikiTitle, addNewWord } from '../../utils/globalState';
+import { changeState, wikiTitle, addNewWord, setSelectedListProperty } from '../../utils/globalState';
 
 export function Sidebar() {
+    function queryValue(event) {
+        let value = document.getElementById('query-input').value
+        if (value.length == 0) {
+            return
+        }
+        setSelectedListProperty(value, "Query")
+    }
+
     function add() {
         addNewWord()
     }
@@ -11,11 +19,17 @@ export function Sidebar() {
     return (
         <>
             <div class="sidebar">
-                <button id="add" onClick={add}>➕</button>
-                <button id="save" class={changeState.value ? "sidebar-no-save" : "sidebar-saved"} onClick={saveData}>保存</button>
-                <h3 class="sidebar-title">{wikiTitle}</h3>
+                <h3>{wikiTitle}</h3>
+                <small>({document.getElementById('version').innerText})</small>
             </div>
-            <span>{document.getElementById('version').innerText}</span>
+            <div>
+                <div class="display: flex;">
+                    <input id="query-input" class="flex-grow: 1;"></input>
+                    <button onClick={queryValue}>Query</button>
+                </div>
+                <button id="add" onClick={add}>Add Item</button>
+                <button id="save" class={changeState.value ? "sidebar-no-save" : "sidebar-saved"} onClick={saveData}>Save</button>
+            </div>
 
             <SidebarTab />
         </>

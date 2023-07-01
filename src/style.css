@@ -37,7 +37,7 @@ body {
 
 .container-content {
 	flex: 0 0 auto;
-	width: 40%;
+	width: 70%;
 	background-color: bisque;
 }
 
@@ -55,12 +55,8 @@ body {
 /* sidebar */
 
 .sidebar {
-	display: inline-flex;
-}
-
-.sidebar-title {
-	text-align: right;
-	margin-right: 1em;
+	display: flex;
+	align-items: baseline;
 }
 
 .sidebar-no-save {
@@ -73,7 +69,6 @@ body {
 
 .sidebar-content {
 	width: 100%;
-	background-color: azure;
 }
 
 ul ul {
@@ -91,4 +86,20 @@ ul .active {
 
 label {
 	color: orange;
+}
+
+/* Main 部分 */
+.main-container {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+}
+
+.vertical-ul {
+	writing-mode: vertical-lr;
+	text-orientation: upright;
+}
+
+.full-width {
+	width: 100%;
 }

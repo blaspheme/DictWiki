@@ -10,7 +10,7 @@ export const wikiTitle = signal(document.getElementsByTagName('title')[0].innerT
 /***
  * List 部分
  * listKey: key 名称
- * listType: 渲染类型; 取值 : Category
+ * listType: 渲染类型; 取值 : Category, Query
 */
 export const listKey = signal(""); // 包含: 选择的Category
 export const listType = signal("");
