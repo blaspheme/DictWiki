@@ -24,10 +24,12 @@ export function ItemShow() {
     }, [selectedWord.value])
 
     return (<>
-        <div>
-            <h3>{selectedWord.value}</h3>
-            <button class="right" onClick={() => itemEditFlag.value = true}>编辑</button>
-        </div>
+        {selectedWord.value.length > 0 &&
+            <div>
+                <h3>{selectedWord.value}</h3>
+                <button class="right" onClick={() => itemEditFlag.value = true}>编辑</button>
+            </div>
+        }
         <div>
             {selectedWord.value.length > 0 && <>Categories:</>}
             {typeof itemData != 'undefined' && itemData.hasOwnProperty("Categories")
