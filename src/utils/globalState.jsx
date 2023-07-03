@@ -112,3 +112,8 @@ export const getItemList = () => {
     }
     return itemList
 }
+
+export const reloadItemList = () => {
+    itemList.value = null
+    getItemList()
+}

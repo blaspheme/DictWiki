@@ -2,6 +2,7 @@
 import { SidebarTab } from './SidebarTab';
 import { saveData } from '../../utils/save';
 import { changeState, wikiTitle, addNewWord, setSelectedListProperty } from '../../utils/globalState';
+import { version } from '../../config/version'
 
 export function Sidebar() {
     function queryValue(event) {
@@ -20,7 +21,7 @@ export function Sidebar() {
         <>
             <div class="sidebar">
                 <h3>{wikiTitle}</h3>
-                <small>({document.getElementById('version').innerText})</small>
+                <small>({version})</small>
             </div>
             <div>
                 <div class="display: flex;">

@@ -1,8 +1,9 @@
 // @ts-nocheck
 import { useEffect, useState } from "preact/hooks"
-import { itemEditFlag, selectedWord, setSelectedListProperty, getItemTypeList, getItemList } from '../../utils/globalState';
+import { changeState, itemEditFlag, selectedWord, setSelectedListProperty, getItemTypeList, getItemList, reloadItemList } from '../../utils/globalState';
 import { WordButton } from '../component/WordButton'
 import { WikiComponent } from '../component/WikiComponent'
+import { compressItemData } from '../../utils/compress'
 
 export function ItemShow() {
     const [itemData, setItemData] = useState()
@@ -26,7 +27,7 @@ export function ItemShow() {
     return (<>
         {selectedWord.value.length > 0 &&
             <div>
-                <h3>{selectedWord.value}</h3>
+                <ItemShowTitle title={selectedWord.value} />
                 <button class="right" onClick={() => itemEditFlag.value = true}>编辑</button>
             </div>
         }
@@ -37,6 +38,49 @@ export function ItemShow() {
         </div>
 
         {typeof itemTypeFieldList != 'undefined' && itemTypeFieldList.map(field => <ItemRow field={field} typeId={itemData.ItemTypeId} fieldData={itemData.Fields} />)}
+    </>)
+}
+
+function ItemShowTitle(props) {
+    const [title, setTitle] = useState("")
+    const [isEdit, setIsEdit] = useState(false)
+
+    function changeName(event) {
+        let oldValue = title
+        let newValue = event.target.previousElementSibling.value
+
+        // 修改相关 Item
+        let _itemList = getItemList().value
+        // 判断重复
+        if (_itemList.hasOwnProperty(newValue)) {
+            alert("已经存在...")
+            return
+        }
+
+        // 修改
+        let newObject = {}
+        for (const [key, _] of Object.entries(_itemList)) {
+            if (key != oldValue) {
+                newObject[key] = _
+            } else {
+                newObject[newValue] = _
+            }
+        }
+        compressItemData(newObject)
+        reloadItemList()
+
+        setTitle(newValue)
+        setIsEdit(false)
+        changeState.value = true
+    }
+
+    useEffect(() => {
+        setTitle(props.title)
+    }, [props.title])
+
+    return (<>
+        {!isEdit && <span><h3>{title}</h3><button onClick={() => setIsEdit(true)}>⚯</button></span>}
+        {isEdit && <span><input value={title}></input><button onClick={changeName}>√</button></span>}
     </>)
 }
 

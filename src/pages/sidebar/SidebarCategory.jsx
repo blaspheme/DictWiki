@@ -2,7 +2,8 @@
 import { useEffect, useState } from "preact/hooks";
 import { compressCategories } from "../../utils/compress";
 import { deepCopy } from "../../utils/object";
-import { changeState, setSelectedListProperty, getCategoriesObject, reloadCategoriesObject } from '../../utils/globalState';
+import { changeState, setSelectedListProperty, getCategoriesObject, getItemList, reloadCategoriesObject } from '../../utils/globalState';
+import { compressItemData } from '../../utils/compress'
 
 export function SidebarCategory() {
     const [isEdit, setIsEdit] = useState(false); // 编辑页面
@@ -77,7 +78,7 @@ function SidebarCategoryShow(props) {
     }, [])
 
     return (<div>
-        <button onClick={() => { props.setIsEdit(true) }}>编辑</button>
+        <button class="full-width" onClick={() => { props.setIsEdit(true) }}>编辑</button>
         {categoriesTree.length > 0 && <SidebarCategoryShowRow item={categoriesTree} />}
     </div>)
 }
@@ -96,20 +97,67 @@ function SidebarCategoryShowRowLi(props) {
         const nestedUl = parentLi.querySelector('ul');
 
         nestedUl.classList.toggle('active');
-        event.target.innerText = nestedUl.classList.contains('active') ? '〰' : '➕';
+        event.target.innerText = nestedUl.classList.contains('active') ? '〰' : '✦';
     }
+
+
+
+    return (
+        <li>
+            {props.liItem.child.length > 0 && <button class="toggle" onClick={clickToggle}>✦</button>}
+            <SidebarCategoryShowRowLiTitle title={props.liItem.category} />
+            {props.liItem.child.length > 0 && <SidebarCategoryShowRow item={props.liItem.child} />}
+        </li>
+    )
+}
+
+function SidebarCategoryShowRowLiTitle(props) {
+    const [title, setTitle] = useState("")
+    const [isEdit, setIsEdit] = useState(false)
 
     function clickCategory(event) {
         setSelectedListProperty(event.target.innerText, "Category")
     }
 
-    return (
-        <li>
-            {props.liItem.child.length > 0 && <button class="toggle" onClick={clickToggle}>➕</button>}
-            <span onClick={clickCategory}>{props.liItem.category}</span>
-            {props.liItem.child.length > 0 && <SidebarCategoryShowRow item={props.liItem.child} />}
-        </li>
-    )
+    function changeName(event) {
+        let oldValue = title
+        let newValue = event.target.previousElementSibling.value
+
+        // 修改 Category
+        let _categoriesObject = getCategoriesObject().value
+        for (const _ of _categoriesObject) {
+            if (_.title == oldValue) {
+                _.title = newValue
+                break
+            }
+        }
+        compressCategories(_categoriesObject)
+
+        // 修改相关 Item
+        let _itemList = getItemList().value
+        for (const [key, _] of Object.entries(_itemList)) {
+            if (!_.Categories.includes(oldValue)) {
+                continue
+            }
+            let _categoriesList = _.Categories.split(',')
+            _categoriesList = _categoriesList.filter((item) => item != oldValue)
+            _categoriesList.push(newValue)
+            _itemList[key]["Categories"] = _categoriesList.join(',')
+        }
+        compressItemData(_itemList)
+        setTitle(newValue)
+        setIsEdit(false)
+        changeState.value = true
+    }
+
+    useEffect(() => {
+        setTitle(props.title)
+    }, [props.title])
+
+    return (<span>
+        {!isEdit && <span><span onClick={clickCategory}>{title}</span> <button onClick={() => setIsEdit(true)}>⚯</button></span>}
+        {isEdit && <span><input value={title}></input><button onClick={changeName}>√</button></span>}
+    </span>)
 }
 
 
@@ -141,9 +189,9 @@ function SidebarCategoryEdit(props) {
     }, [])
 
     return (<div>
-        <button onClick={save}>保存</button>
+        <button class="full-width" onClick={save}>保存</button>
         {categoriesList.map((item, index) => (<SidebarCategoryEditRow item={item} index={index} categoriesList={categoriesList} setCategoriesList={setCategoriesList} />))}
-        <button onClick={addNewRow}>增加新行</button>
+        <button class="full-width" onClick={addNewRow}>增加新行</button>
     </div>)
 }
 

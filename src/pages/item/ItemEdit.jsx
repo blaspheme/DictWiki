@@ -81,7 +81,7 @@ export function ItemEdit() {
 
             {fieldList.length > 0 && fieldList.map(field => <FieldRow itemTypeId={itemTypeId} field={field} itemFieldObject={itemFieldObject} setItemFieldObject={setItemFieldObject} />)}
             <div>
-                <button onClick={save}>保存</button>
+                <button class="full-width" onClick={save}>保存</button>
             </div>
         </div>
     );

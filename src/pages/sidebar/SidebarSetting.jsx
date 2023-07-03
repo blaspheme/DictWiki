@@ -16,7 +16,7 @@ export function SidebarSetting() {
     function clickImport() {
         const file = document.getElementById('importFile').files[0];
         if (typeof file == 'undefined') {
-            console.log("没有选择文件...")
+            alert("没有选择文件...")
             return
         }
         const reader = new FileReader();
