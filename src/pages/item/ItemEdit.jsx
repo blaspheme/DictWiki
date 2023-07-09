@@ -75,7 +75,7 @@ export function ItemEdit() {
             </select></div>
 
             <div class="full-div">
-                <label>Title(必填)</label>
+                <label>Title</label>
                 <input id="itemTitle" title="itemTitle" class="full-width" value={itemTitle} onChangeCapture={(e) => setItemTitle(e.target.value)}></input>
             </div>
             <div class="full-div">
