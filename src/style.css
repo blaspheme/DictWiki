@@ -101,5 +101,10 @@ label {
 }
 
 .full-width {
+	width: 80%;
+}
+
+.full-div{
+	display: flex;
 	width: 100%;
 }

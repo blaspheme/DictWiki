@@ -74,8 +74,14 @@ export function ItemEdit() {
                 {getItemTypeList().value.length > 0 && getItemTypeList().value.map(item => <option value={item.itemTypeId}>{item.itemTypeName}</option>)}
             </select></div>
 
-            <div>Title(必填): <input id="itemTitle" title="itemTitle" value={itemTitle} onChangeCapture={(e) => setItemTitle(e.target.value)}></input></div>
-            <div>Categories: <input title="itemCategories" value={itemCategories} onChangeCapture={(e) => setItemCategories(e.target.value)}></input></div>
+            <div class="full-div">
+                <label>Title(必填)</label>
+                <input id="itemTitle" title="itemTitle" class="full-width" value={itemTitle} onChangeCapture={(e) => setItemTitle(e.target.value)}></input>
+            </div>
+            <div class="full-div">
+                <label>Categories</label>
+                <input title="itemCategories" class="full-width" value={itemCategories} onChangeCapture={(e) => setItemCategories(e.target.value)}></input>
+            </div>
 
             <h3>自定义字段</h3>
 
